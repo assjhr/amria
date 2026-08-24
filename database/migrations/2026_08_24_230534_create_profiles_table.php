@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profiles', function (Blueprint $table) {
-    $table->id();
+            $table->id();
 
-    $table->foreignId('user_id')
-        ->constrained()
-        ->cascadeOnDelete();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-    $table->string('username')->nullable();
-    $table->date('birthday')->nullable();
-    $table->string('profile_photo')->nullable();
-    $table->text('bio')->nullable();
+            $table->string('username')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('profile_photo')->nullable();
+            $table->text('bio')->nullable();
 
-    $table->timestamps();
-});
+            $table->timestamps();
+        });
     }
 
     /**

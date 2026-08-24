@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('news', function (Blueprint $table) {
-    $table->id();
+            $table->id();
 
-    $table->foreignId('user_id')
-        ->constrained()
-        ->cascadeOnDelete();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-    $table->string('title');
-    $table->string('image')->nullable();
-    $table->text('content');
-    $table->timestamp('published_at');
+            $table->string('title');
+            $table->string('image')->nullable();
+            $table->text('content');
+            $table->timestamp('published_at');
 
-    $table->timestamps();
-});
+            $table->timestamps();
+        });
     }
 
     /**

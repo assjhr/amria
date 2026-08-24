@@ -12,18 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('news_tag', function (Blueprint $table) {
-    $table->id();
+            $table->id();
 
-    $table->foreignId('news_id')
-        ->constrained()
-        ->cascadeOnDelete();
+            $table->foreignId('news_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-    $table->foreignId('tag_id')
-        ->constrained()
-        ->cascadeOnDelete();
+            $table->foreignId('tag_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
-    $table->timestamps();
-});
+            $table->timestamps();
+        });
     }
 
     /**
