@@ -44,13 +44,13 @@ class User extends Authenticatable implements PasskeyUser
      * @return array<string, string>
      */
     protected function casts(): array
-{
-    return [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'is_admin' => 'boolean',
-    ];
-}
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'is_admin' => 'boolean',
+        ];
+    }
 
     /**
      * Get the user's initials.
