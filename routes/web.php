@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FaqCategoryController;
-use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,9 @@ Route::get('/news', [NewsController::class, 'index'])
 
 Route::get('/news/{news}', [NewsController::class, 'show'])
     ->name('news.show');
+
+Route::get('/faq', [FaqController::class, 'index'])
+    ->name('faq.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -88,22 +92,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 ->name('faq-categories.destroy');
 
             // FAQs
-            Route::get('/faqs', [FaqController::class, 'index'])
+            Route::get('/faqs', [AdminFaqController::class, 'index'])
                 ->name('faqs.index');
 
-            Route::get('/faqs/create', [FaqController::class, 'create'])
+            Route::get('/faqs/create', [AdminFaqController::class, 'create'])
                 ->name('faqs.create');
 
-            Route::post('/faqs', [FaqController::class, 'store'])
+            Route::post('/faqs', [AdminFaqController::class, 'store'])
                 ->name('faqs.store');
 
-            Route::get('/faqs/{faq}/edit', [FaqController::class, 'edit'])
+            Route::get('/faqs/{faq}/edit', [AdminFaqController::class, 'edit'])
                 ->name('faqs.edit');
 
-            Route::put('/faqs/{faq}', [FaqController::class, 'update'])
+            Route::put('/faqs/{faq}', [AdminFaqController::class, 'update'])
                 ->name('faqs.update');
 
-            Route::delete('/faqs/{faq}', [FaqController::class, 'destroy'])
+            Route::delete('/faqs/{faq}', [AdminFaqController::class, 'destroy'])
                 ->name('faqs.destroy');
         });
 });
