@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white antialiased dark:bg-linear-to-b dark:from-neutral-950 dark:to-neutral-900">
-        <div class="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-            <div class="flex w-full max-w-sm flex-col gap-2">
-                <a href="{{ route('home') }}" class="flex flex-col items-center gap-2 font-medium" wire:navigate>
-                    <span class="flex h-9 w-9 mb-1 items-center justify-center rounded-md">
-                        <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
-                    </span>
-                    <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>
-                </a>
-                <div class="flex flex-col gap-6">
-                    {{ $slot }}
+
+    <body class="min-h-screen bg-[#fff9df] text-black antialiased">
+        <div class="flex min-h-svh flex-col items-center justify-center px-6 py-12 md:px-10">
+            <div class="w-full max-w-md">
+                <div class="border border-black/15 bg-[#fff9df] px-7 py-10 sm:px-10">
+                    <div class="flex flex-col gap-8">
+                        {{ $slot }}
+                    </div>
                 </div>
             </div>
         </div>
