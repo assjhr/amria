@@ -1,107 +1,141 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gebruiker toevoegen | Amria Admin</title>
-</head>
-<body>
+@extends('layouts.public')
 
-    <h1>Nieuwe gebruiker toevoegen</h1>
+@section('title', 'Nieuwe gebruiker | Amria')
 
-    <p>
-        <a href="{{ route('admin.users.index') }}">
-            ← Terug naar gebruikersbeheer
-        </a>
-    </p>
+@section('content')
+    <section class="mx-auto max-w-4xl px-6 py-20 md:py-28">
+        <p class="text-xs uppercase tracking-[0.3em] text-black/45">
+            Admin / Gebruikers
+        </p>
 
-    @if ($errors->any())
-        <div>
-            <strong>Controleer de volgende fouten:</strong>
+        <h1 class="mt-5 text-5xl font-light md:text-6xl">
+            Nieuwe gebruiker
+        </h1>
 
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        <p class="mt-5 max-w-xl font-light leading-8 text-black/60">
+            Maak een nieuw account aan en bepaal eventueel meteen de adminrechten.
+        </p>
 
-    <form action="{{ route('admin.users.store') }}" method="POST">
-        @csrf
+        @if ($errors->any())
+            <div class="mt-10 border border-black/20 p-5">
+                <p class="text-xs uppercase tracking-[0.22em]">
+                    Controleer de volgende fouten
+                </p>
 
-        <div>
-            <label for="name">Naam</label><br>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value="{{ old('name') }}"
-                required
-            >
-        </div>
+                <ul class="mt-4 space-y-2 text-sm font-light">
+                    @foreach ($errors->all() as $error)
+                        <li>— {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <br>
+        <form
+            action="{{ route('admin.users.store') }}"
+            method="POST"
+            class="mt-14 space-y-10"
+        >
+            @csrf
 
-        <div>
-            <label for="email">E-mail</label><br>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value="{{ old('email') }}"
-                required
-            >
-        </div>
+            <div>
+                <label
+                    for="name"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Naam
+                </label>
 
-        <br>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ old('name') }}"
+                    required
+                    class="mt-3 w-full border-0 border-b border-black/30 bg-transparent px-0 py-3 font-light outline-none focus:border-black focus:ring-0"
+                >
+            </div>
 
-        <div>
-            <label for="password">Wachtwoord</label><br>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                minlength="8"
-                required
-            >
-        </div>
+            <div>
+                <label
+                    for="email"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    E-mail
+                </label>
 
-        <br>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    class="mt-3 w-full border-0 border-b border-black/30 bg-transparent px-0 py-3 font-light outline-none focus:border-black focus:ring-0"
+                >
+            </div>
 
-        <div>
-            <label for="password_confirmation">
-                Bevestig wachtwoord
-            </label><br>
+            <div>
+                <label
+                    for="password"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Wachtwoord
+                </label>
 
-            <input
-                type="password"
-                id="password_confirmation"
-                name="password_confirmation"
-                minlength="8"
-                required
-            >
-        </div>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    class="mt-3 w-full border-0 border-b border-black/30 bg-transparent px-0 py-3 font-light outline-none focus:border-black focus:ring-0"
+                >
+            </div>
 
-        <br>
+            <div>
+                <label
+                    for="password_confirmation"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Wachtwoord bevestigen
+                </label>
 
-        <div>
-            <label>
+                <input
+                    type="password"
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    required
+                    class="mt-3 w-full border-0 border-b border-black/30 bg-transparent px-0 py-3 font-light outline-none focus:border-black focus:ring-0"
+                >
+            </div>
+
+            <label class="flex cursor-pointer items-center gap-4">
                 <input
                     type="checkbox"
                     name="is_admin"
                     value="1"
+                    @checked(old('is_admin'))
+                    class="h-4 w-4 border-black bg-transparent text-black focus:ring-black"
                 >
-                Maak deze gebruiker admin
+
+                <span class="text-sm font-light">
+                    Deze gebruiker adminrechten geven
+                </span>
             </label>
-        </div>
 
-        <br>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <button
+                    type="submit"
+                    class="border border-black bg-black px-7 py-4 text-xs uppercase tracking-[0.22em] text-[#fff9df] transition hover:bg-transparent hover:text-black"
+                >
+                    Gebruiker aanmaken
+                </button>
 
-        <button type="submit">
-            Gebruiker aanmaken
-        </button>
-    </form>
-
-</body>
-</html>
+                <a
+                    href="{{ route('admin.users.index') }}"
+                    class="border border-black px-7 py-4 text-xs uppercase tracking-[0.22em] transition hover:bg-black hover:text-[#fff9df]"
+                >
+                    Annuleren
+                </a>
+            </div>
+        </form>
+    </section>
+@endsection

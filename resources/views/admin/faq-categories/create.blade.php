@@ -1,56 +1,75 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ-categorie toevoegen | Amria Admin</title>
-</head>
-<body>
+@extends('layouts.public')
 
-    <h1>FAQ-categorie toevoegen</h1>
+@section('title', 'FAQ-categorie toevoegen | Amria')
 
-    <p>
-        <a href="{{ route('admin.faq-categories.index') }}">
-            ← Terug naar FAQ-categorieën
-        </a>
-    </p>
+@section('content')
+    <section class="mx-auto max-w-4xl px-6 py-20 md:py-28">
+        <p class="text-xs uppercase tracking-[0.3em] text-black/45">
+            Admin / FAQ
+        </p>
 
-    @if ($errors->any())
-        <div>
-            <strong>Controleer de volgende fouten:</strong>
+        <h1 class="mt-5 text-5xl font-light md:text-6xl">
+            FAQ-categorie toevoegen
+        </h1>
 
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        <p class="mt-5 max-w-xl font-light leading-8 text-black/60">
+            Voeg een nieuwe categorie toe om FAQ-vragen logisch te groeperen.
+        </p>
 
-    <form
-        action="{{ route('admin.faq-categories.store') }}"
-        method="POST"
-    >
-        @csrf
+        @if ($errors->any())
+            <div class="mt-10 border border-black/20 p-5">
+                <p class="text-xs uppercase tracking-[0.22em]">
+                    Controleer de volgende fouten
+                </p>
 
-        <div>
-            <label for="name">Naam</label><br>
+                <ul class="mt-4 space-y-2 text-sm font-light">
+                    @foreach ($errors->all() as $error)
+                        <li>— {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value="{{ old('name') }}"
-                required
-            >
-        </div>
+        <form
+            action="{{ route('admin.faq-categories.store') }}"
+            method="POST"
+            class="mt-14 space-y-10"
+        >
+            @csrf
 
-        <br>
+            <div>
+                <label
+                    for="name"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Naam
+                </label>
 
-        <button type="submit">
-            Categorie toevoegen
-        </button>
-    </form>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ old('name') }}"
+                    required
+                    class="mt-3 w-full border-0 border-b border-black/30 bg-transparent px-0 py-3 font-light outline-none focus:border-black focus:ring-0"
+                >
+            </div>
 
-</body>
-</html>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <button
+                    type="submit"
+                    class="border border-black bg-black px-7 py-4 text-xs uppercase tracking-[0.22em] text-[#fff9df] transition hover:bg-transparent hover:text-black"
+                >
+                    Categorie toevoegen
+                </button>
+
+                <a
+                    href="{{ route('admin.faq-categories.index') }}"
+                    class="border border-black px-7 py-4 text-xs uppercase tracking-[0.22em] transition hover:bg-black hover:text-[#fff9df]"
+                >
+                    Annuleren
+                </a>
+            </div>
+        </form>
+    </section>
+@endsection

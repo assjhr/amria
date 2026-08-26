@@ -1,105 +1,147 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nieuws bewerken | Amria Admin</title>
-</head>
-<body>
+@extends('layouts.public')
 
-    <h1>Nieuws bewerken</h1>
+@section('title', 'Nieuws bewerken | Amria')
 
-    <p>
-        <a href="{{ route('admin.news.index') }}">
-            ← Terug naar nieuwsbeheer
-        </a>
-    </p>
+@section('content')
+    <section class="mx-auto max-w-4xl px-6 py-20 md:py-28">
+        <p class="text-xs uppercase tracking-[0.3em] text-black/45">
+            Admin / Nieuws
+        </p>
 
-    @if ($errors->any())
-        <div>
-            <strong>Controleer de volgende fouten:</strong>
+        <h1 class="mt-5 text-5xl font-light md:text-6xl">
+            Nieuws bewerken
+        </h1>
 
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        <p class="mt-5 max-w-xl font-light leading-8 text-black/60">
+            Pas het nieuwsbericht aan en bewaar je wijzigingen.
+        </p>
 
-    <form
-        action="{{ route('admin.news.update', $news) }}"
-        method="POST"
-        enctype="multipart/form-data"
-    >
-        @csrf
-        @method('PUT')
+        @if ($errors->any())
+            <div class="mt-10 border border-black/20 p-5">
+                <p class="text-xs uppercase tracking-[0.22em]">
+                    Controleer de volgende fouten
+                </p>
 
-        <div>
-            <label for="title">Titel</label><br>
+                <ul class="mt-4 space-y-2 text-sm font-light">
+                    @foreach ($errors->all() as $error)
+                        <li>— {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            <input
-                type="text"
-                id="title"
-                name="title"
-                value="{{ old('title', $news->title) }}"
-                required
-            >
-        </div>
+        <form
+            action="{{ route('admin.news.update', $news) }}"
+            method="POST"
+            enctype="multipart/form-data"
+            class="mt-14 space-y-10"
+        >
+            @csrf
+            @method('PUT')
 
-        <br>
+            <div>
+                <label
+                    for="title"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Titel
+                </label>
 
-        <div>
-            <label for="image">Nieuwe afbeelding</label><br>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ old('title', $news->title) }}"
+                    required
+                    class="mt-3 w-full border-0 border-b border-black/30 bg-transparent px-0 py-3 font-light outline-none focus:border-black focus:ring-0"
+                >
+            </div>
 
-            @if ($news->image)
-                <p>Er is momenteel een afbeelding ingesteld.</p>
-            @endif
+            <div>
+                <label
+                    for="image"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Afbeelding
+                </label>
 
-            <input
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*"
-            >
+                @if ($news->image)
+                    <div class="mt-5">
+                        <img
+                            src="{{ asset('storage/' . $news->image) }}"
+                            alt="{{ $news->title }}"
+                            class="h-40 w-40 object-cover"
+                        >
+                    </div>
 
-            <p>Laat leeg als je de huidige afbeelding wilt behouden.</p>
-        </div>
+                    <p class="mt-3 text-xs font-light text-black/45">
+                        Huidige afbeelding
+                    </p>
+                @endif
 
-        <br>
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    class="mt-5 block w-full text-sm font-light"
+                >
 
-        <div>
-            <label for="content">Inhoud</label><br>
+                <p class="mt-2 text-xs font-light text-black/45">
+                    Laat leeg om de huidige afbeelding te behouden.
+                </p>
+            </div>
 
-            <textarea
-                id="content"
-                name="content"
-                rows="10"
-                cols="60"
-                required
-            >{{ old('content', $news->content) }}</textarea>
-        </div>
+            <div>
+                <label
+                    for="content"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Inhoud
+                </label>
 
-        <br>
+                <textarea
+                    id="content"
+                    name="content"
+                    rows="10"
+                    required
+                    class="mt-3 w-full resize-y border border-black/25 bg-transparent p-4 font-light leading-8 outline-none focus:border-black focus:ring-0"
+                >{{ old('content', $news->content) }}</textarea>
+            </div>
 
-        <div>
-            <label for="published_at">Publicatiedatum</label><br>
+            <div>
+                <label
+                    for="published_at"
+                    class="text-xs uppercase tracking-[0.22em]"
+                >
+                    Publicatiedatum
+                </label>
 
-            <input
-                type="datetime-local"
-                id="published_at"
-                name="published_at"
-                value="{{ old('published_at', $news->published_at?->format('Y-m-d\TH:i')) }}"
-                required
-            >
-        </div>
+                <input
+                    type="datetime-local"
+                    id="published_at"
+                    name="published_at"
+                    value="{{ old('published_at', $news->published_at?->format('Y-m-d\TH:i')) }}"
+                    required
+                    class="mt-3 w-full border-0 border-b border-black/30 bg-transparent px-0 py-3 font-light outline-none focus:border-black focus:ring-0"
+                >
+            </div>
 
-        <br>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <button
+                    type="submit"
+                    class="border border-black bg-black px-7 py-4 text-xs uppercase tracking-[0.22em] text-[#fff9df] transition hover:bg-transparent hover:text-black"
+                >
+                    Wijzigingen opslaan
+                </button>
 
-        <button type="submit">
-            Wijzigingen opslaan
-        </button>
-    </form>
-
-</body>
-</html>
+                <a
+                    href="{{ route('admin.news.index') }}"
+                    class="border border-black px-7 py-4 text-xs uppercase tracking-[0.22em] transition hover:bg-black hover:text-[#fff9df]"
+                >
+                    Annuleren
+                </a>
+            </div>
+        </form>
+    </section>
+@endsection
