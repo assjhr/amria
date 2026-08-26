@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
@@ -23,6 +24,12 @@ Route::get('/news/{news}', [NewsController::class, 'show'])
 
 Route::get('/faq', [FaqController::class, 'index'])
     ->name('faq.index');
+
+Route::get('/contact', [ContactController::class, 'create'])
+    ->name('contact.create');
+
+Route::post('/contact', [ContactController::class, 'store'])
+    ->name('contact.store');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
