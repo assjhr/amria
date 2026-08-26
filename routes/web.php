@@ -5,12 +5,21 @@ use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+Route::get('/profiles/{user}', [ProfileController::class, 'show'])
+    ->name('profiles.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
+
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])
+        ->name('profiles.edit');
+
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('profiles.update');
 
     Route::prefix('admin')
         ->name('admin.')
