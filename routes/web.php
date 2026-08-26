@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FaqCategoryController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/users', [UserController::class, 'index'])
                 ->name('users.index');
 
+            // News
             Route::get('/news', [NewsController::class, 'index'])
                 ->name('news.index');
 
@@ -39,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/news/{news}', [NewsController::class, 'destroy'])
                 ->name('news.destroy');
 
+            // FAQ categories
             Route::get('/faq-categories', [FaqCategoryController::class, 'index'])
                 ->name('faq-categories.index');
 
@@ -56,6 +59,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::delete('/faq-categories/{faqCategory}', [FaqCategoryController::class, 'destroy'])
                 ->name('faq-categories.destroy');
+
+            // FAQs
+            Route::get('/faqs', [FaqController::class, 'index'])
+                ->name('faqs.index');
+
+            Route::get('/faqs/create', [FaqController::class, 'create'])
+                ->name('faqs.create');
+
+            Route::post('/faqs', [FaqController::class, 'store'])
+                ->name('faqs.store');
+
+            Route::get('/faqs/{faq}/edit', [FaqController::class, 'edit'])
+                ->name('faqs.edit');
+
+            Route::put('/faqs/{faq}', [FaqController::class, 'update'])
+                ->name('faqs.update');
+
+            Route::delete('/faqs/{faq}', [FaqController::class, 'destroy'])
+                ->name('faqs.destroy');
         });
 });
 
