@@ -3,14 +3,22 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqController;
-use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+
 Route::get('/profiles/{user}', [ProfileController::class, 'show'])
     ->name('profiles.show');
+
+Route::get('/news', [NewsController::class, 'index'])
+    ->name('news.index');
+
+Route::get('/news/{news}', [NewsController::class, 'show'])
+    ->name('news.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -28,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [AdminController::class, 'index'])
                 ->name('dashboard');
 
+            // Users
             Route::get('/users', [UserController::class, 'index'])
                 ->name('users.index');
 
@@ -41,22 +50,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 ->name('users.toggle-admin');
 
             // News
-            Route::get('/news', [NewsController::class, 'index'])
+            Route::get('/news', [AdminNewsController::class, 'index'])
                 ->name('news.index');
 
-            Route::get('/news/create', [NewsController::class, 'create'])
+            Route::get('/news/create', [AdminNewsController::class, 'create'])
                 ->name('news.create');
 
-            Route::post('/news', [NewsController::class, 'store'])
+            Route::post('/news', [AdminNewsController::class, 'store'])
                 ->name('news.store');
 
-            Route::get('/news/{news}/edit', [NewsController::class, 'edit'])
+            Route::get('/news/{news}/edit', [AdminNewsController::class, 'edit'])
                 ->name('news.edit');
 
-            Route::put('/news/{news}', [NewsController::class, 'update'])
+            Route::put('/news/{news}', [AdminNewsController::class, 'update'])
                 ->name('news.update');
 
-            Route::delete('/news/{news}', [NewsController::class, 'destroy'])
+            Route::delete('/news/{news}', [AdminNewsController::class, 'destroy'])
                 ->name('news.destroy');
 
             // FAQ categories
