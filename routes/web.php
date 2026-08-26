@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::delete('/news/{news}', [NewsController::class, 'destroy'])
                 ->name('news.destroy');
+
+            Route::get('/faq-categories', [FaqCategoryController::class, 'index'])
+                ->name('faq-categories.index');
+
+            Route::get('/faq-categories/create', [FaqCategoryController::class, 'create'])
+                ->name('faq-categories.create');
+
+            Route::post('/faq-categories', [FaqCategoryController::class, 'store'])
+                ->name('faq-categories.store');
+
+            Route::get('/faq-categories/{faqCategory}/edit', [FaqCategoryController::class, 'edit'])
+                ->name('faq-categories.edit');
+
+            Route::put('/faq-categories/{faqCategory}', [FaqCategoryController::class, 'update'])
+                ->name('faq-categories.update');
+
+            Route::delete('/faq-categories/{faqCategory}', [FaqCategoryController::class, 'destroy'])
+                ->name('faq-categories.destroy');
         });
 });
 
