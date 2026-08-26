@@ -8,16 +8,21 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="min-h-screen bg-[#fff9df] text-black antialiased">
 
     <header class="border-b border-black/15">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-7">
-            <a href="{{ route('home') }}">
-                <span class="text-3xl font-light tracking-[0.5em]">
-    AMRIA
-</span>
+
+            {{-- Logo --}}
+            <a
+                href="{{ route('home') }}"
+                class="text-3xl font-light tracking-[0.5em]"
+            >
+                AMRIA
             </a>
 
+            {{-- Navigatie --}}
             <nav class="hidden items-center gap-10 text-xs uppercase tracking-[0.22em] md:flex">
                 <a
                     href="{{ route('home') }}"
@@ -41,14 +46,40 @@
                 </a>
             </nav>
 
+            {{-- Account --}}
             <div class="flex items-center gap-4">
+
                 @auth
+                    {{-- Alleen zichtbaar voor admins --}}
+                    @if (auth()->user()->is_admin)
+                        <a
+                            href="{{ route('admin.dashboard') }}"
+                            class="text-xs uppercase tracking-[0.2em] transition hover:opacity-45"
+                        >
+                            Admin
+                        </a>
+                    @endif
+
                     <a
                         href="{{ route('profiles.show', auth()->user()) }}"
-                        class="border border-black px-5 py-3 text-xs uppercase tracking-[0.2em] transition hover:bg-black hover:text-[#fff9df]"
+                        class="text-xs uppercase tracking-[0.2em] transition hover:opacity-45"
                     >
                         Profiel
                     </a>
+
+                    <form
+                        action="{{ route('logout') }}"
+                        method="POST"
+                    >
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="border border-black px-5 py-3 text-xs uppercase tracking-[0.2em] transition hover:bg-black hover:text-[#fff9df]"
+                        >
+                            Uitloggen
+                        </button>
+                    </form>
                 @else
                     <a
                         href="{{ route('login') }}"
@@ -57,6 +88,7 @@
                         Inloggen
                     </a>
                 @endauth
+
             </div>
         </div>
     </header>
@@ -67,10 +99,11 @@
 
     <footer class="mt-24 border-t border-black/15">
         <div class="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-4">
+
             <div>
                 <p class="text-3xl font-light tracking-[0.5em]">
-    AMRIA
-</p>
+                    AMRIA
+                </p>
 
                 <p class="mt-6 max-w-xs text-sm font-light leading-7 text-black/65">
                     Minimalistische fashion, nieuws en inspiratie vanuit Amria.
@@ -127,6 +160,7 @@
                     info@amria.be
                 </p>
             </div>
+
         </div>
 
         <div class="mx-auto flex max-w-7xl justify-between border-t border-black/15 px-6 py-6 text-xs font-light text-black/55">
